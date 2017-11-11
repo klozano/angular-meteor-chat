@@ -1,39 +1,41 @@
 import { NgModule } from '@angular/core';
-
 import { BrowserModule } from '@angular/platform-browser';
-
 import { FormsModule } from '@angular/forms';
-
 import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MatIconModule,
+  MatButtonModule,
+  MatSidenavModule,
+  MatToolbarModule,
+  MatCardModule,
+  MatDialog,
+  MatDialogModule,
+  MatInputModule,
+  MatListModule,
+  MatChipsModule,
+  MatTooltipModule,
+ } from '@angular/material';
 
 import { AppComponent } from './app.component';
-import { TodoAddComponent } from './todo-add/todo-add.component';
-import { TodoListComponent } from './todo-list/todo-list.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ChatRoomComponent } from './chat-room/chat-room.component';
 
 @NgModule({
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     RouterModule.forRoot([
+      // Home Page
       {
-        path: 'todoList',
-        component: TodoListComponent,
-        data: {
-          title: 'Todo List'
-        }
-      },
-      {
-        path: 'todoAdd',
-        component: TodoAddComponent,
-        data: {
-          title: 'Add Todo'
-        }
+        path: 'defaultRoom',
+        component: ChatRoomComponent
       },
       // Home Page
       {
         path: '',
-        redirectTo: '/todoList',
+        redirectTo: '/defaultRoom',
         pathMatch: 'full'
       },
       // 404 Page
@@ -44,12 +46,23 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
           title: '404 Page Not Found'
         }
       }
-    ])
+    ]),
+
+    MatIconModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatDialogModule,
+    MatDialogModule,
+    MatInputModule,
+    MatListModule, 
+    MatChipsModule,
+    MatTooltipModule  
   ],
   declarations: [
     AppComponent,
-    TodoAddComponent,
-    TodoListComponent,
+    ChatRoomComponent,
     PageNotFoundComponent
   ],
   bootstrap: [

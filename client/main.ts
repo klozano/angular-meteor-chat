@@ -1,4 +1,5 @@
 import './polyfills';
+import 'node_modules/@angular/material/prebuilt-themes/indigo-pink.css';
 
 import { Meteor } from 'meteor/meteor';
 
