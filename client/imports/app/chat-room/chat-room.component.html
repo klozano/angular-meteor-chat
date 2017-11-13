@@ -3,7 +3,7 @@
 </button>
 <div class="chat-container">
   <mat-card class="main-card">
-    <mat-list class="chat-list">
+    <mat-list class="chat-list" #scrollMe>
       <mat-list-item *ngFor="let message of messages | async" [ngClass]="[(message.type === 'MSG')? 'chat-list-item': '']">
         <img mat-list-avatar *ngIf="message.type === 'MSG'" [src]="message.avatar">
         <h4 mat-line *ngIf="message.type === 'MSG'">

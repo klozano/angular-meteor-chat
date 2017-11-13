@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import * as randomName from 'random-name';
 
@@ -18,6 +18,9 @@ import './chat-room.component.css'
 })
 export class ChatRoomComponent {
   
+  @ViewChild('scrollMe', {read: ElementRef})
+  myScrollContainer: ElementRef;
+
   user: any;
   messageContent: string;
   AVATAR_URL = 'https://api.adorable.io/avatars/285';
@@ -31,6 +34,16 @@ export class ChatRoomComponent {
     this.initModel();;
   }
 
+  ngAfterViewChecked() {        
+      this.scrollToBottom();        
+  } 
+
+  scrollToBottom(): void {
+      try {
+          this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+      } catch(err) { console.log(err) }                 
+  }
+
   private initModel(): void {
     const randomId = this.getRandomId();
     const name = randomName();
@@ -42,8 +55,9 @@ export class ChatRoomComponent {
 
     this.messageSubscription = MeteorObservable.subscribe('Messages.all').subscribe(() => {
       this.messages = Messages.find();
-      Meteor.call('addMessage', `${name} has been joined the chat`, name, 'INFO');
+      this.scrollToBottom();
     });
+    Meteor.call('addMessage', `${name} has been joined the chat`, name, 'INFO');
 
   }
 
@@ -58,6 +72,7 @@ export class ChatRoomComponent {
     const { name, avatar } = this.user;
     Meteor.call('addMessage', message, name, 'MSG', avatar);
     this.messageContent = null;
+    this.scrollToBottom();
   }
 
 }
